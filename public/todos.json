@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "date": "2019-04-23",
+    "category": "General",
+    "completed": false,
+    "title": "Lorem ipsum 1",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+  },
+  {
+    "id": 2,
+    "date": "2019-04-23",
+    "category": "Work",
+    "completed": true,
+    "title": "Lorem ipsum 2",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." 
+  },
+  {
+    "id": 3,
+    "date": "2019-04-23",
+    "category": "Study",
+    "completed": true,
+    "title": "Blabla",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+  },
+  {
+    "id": 4,
+    "date": "2019-04-23",
+    "category": "General",
+    "completed": false,
+    "title": "Title 4",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+  },
+  {
+    "id": 5,
+    "date": "2019-04-23",
+    "category": "Study",
+    "completed": false,
+    "title": "Title 5",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+  },
+  {
+    "id": 6,
+    "date": "2019-04-23",
+    "completed": true,
+    "category": "General",
+    "title": "Lorem ipsum 6",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  }   
+]
