@@ -7,22 +7,38 @@ export default createStore({
     selectedFilter: "All",
     itemsLoaded: false,
     sortOrder: false,
-    sortValue: "default"
+    sortValue: "default",
+    onlyPending: false
   },
   getters: {
     itemsLoaded: state => {
       return state.itemsLoaded;
     },
 
-    items: state => {
-      return state.items;
+    sortValue: state => {
+      return state.sortValue;
     },
 
-    filteredItems(state) {
-      if (state.selectedFilter !== 'All') {
-        return [...state.items].filter(item => item.category === state.selectedFilter)
+    onlyPending: state => {
+      return state.onlyPending;
+    },
+
+    items: state => {
+      if (state.onlyPending) {
+        console.log("filtering");
+        console.log([...state.items].filter(item => item.completed !== true))
+        return [...state.items.filter(item => item.completed !== true)] 
       } else {
         return state.items;
+      }
+    },
+
+    filteredItems(state, getters) {
+      console.log(state.items);
+      if (state.selectedFilter !== 'All') {
+        return [...getters.items.filter(item => item.category === state.selectedFilter)]
+      } else {
+        return getters.items;
       }      
     },
 
@@ -31,17 +47,15 @@ export default createStore({
     },
 
     filteredAndSearchedAndSortedItems(state, getters) {
-      //let arr = [...getters.filteredAndSearchedItems];
-      //console.log(arr());
-      //console.log(getters.filteredItems);
-      if (state.sortValue === "default") {
+      let val = state.sortValue;
+      if (val === "default") {
         return [ ...getters.filteredAndSearchedItems ]
       }
       else if (state.sortOrder) {
-        return [...getters.filteredAndSearchedItems.sort((a,b) => a.title.localeCompare(b.title)) ] 
+        return [...getters.filteredAndSearchedItems.sort((a,b) => a[val].localeCompare(b[val])) ] 
       }
       else {
-        return [...getters.filteredAndSearchedItems.sort((a,b) => b.title.localeCompare(a.title)) ] 
+        return [...getters.filteredAndSearchedItems.sort((a,b) => b[val].localeCompare(a[val])) ] 
       }      
     }
   },
@@ -68,6 +82,10 @@ export default createStore({
 
     searchItems(state, value) {
       state.searchQuery = value;
+    },
+
+    selectPending(state) {
+      state.onlyPending = !state.onlyPending;
     }
   },
   actions: {

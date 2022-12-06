@@ -6,7 +6,7 @@
     <div class="sidebar-item" v-for="(item, index) in categories" v-bind:key="index" v-on:click="filterItems(item)" v-bind:class="{'sidebar-item_active': this.$store.state.selectedFilter === item}">
       <p class="sidebar-item__title">{{item}}</p>
     </div>
-    <p class="sidebar-counter">Всего {{filteredItems.length}} заданий</p>
+    <p class="sidebar-counter">Всего {{filteredAndSearchedAndSortedItems.length}} заданий</p>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["items", "filteredItems"]), 
+    ...mapGetters(["items", "filteredAndSearchedAndSortedItems"]), 
     categories() {
       let unique = [];
       for (var i = 0; i < this.items.length; i++) {

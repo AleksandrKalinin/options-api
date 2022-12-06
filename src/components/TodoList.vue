@@ -22,17 +22,8 @@ export default {
 
   },
   computed: {
-    ...mapGetters(["items", 
-                   "filteredItems", 
-                   "filteredAndSearchedItems", 
-                   "filteredAndSearchedAndSortedItems",
+    ...mapGetters(["filteredAndSearchedAndSortedItems",
                    "itemsLoaded"])
-  },
-  updated() {
-    console.log("items", this.items);
-    console.log("filteredItems", this.filteredItems);
-    console.log("filteredAndSearchedItems", this.filteredAndSearchedItems);
-    console.log("filteredAndSearchedAndSortedItems", this.filteredAndSearchedAndSortedItems);
   }
 }
 </script>
