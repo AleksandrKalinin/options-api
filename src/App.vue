@@ -58,11 +58,6 @@ export default {
       this.editModalOpen = true;
     },
 
-    deleteItem: function(id) {
-      let el = this.items.map(item => item.id).indexOf(id);
-      this.items.splice(el,1);
-    },
-
     openAddModal: function() {
       this.addModalOpen = true;
     },
@@ -72,12 +67,7 @@ export default {
       this.todoTitle = this.items[el].title; 
       this.todoText = this.items[el].text;       
       this.editModalOpen = true;
-    },
-
-    toggleItem: function(id) {
-      let el = this.items.map(item => item.id).indexOf(id);
-      this.items[el].completed = !this.items[el].completed;
-    },
+    }
   },
   mounted() {
     fetch('./todos.json')

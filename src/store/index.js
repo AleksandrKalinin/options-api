@@ -8,9 +8,16 @@ export default createStore({
     itemsLoaded: false,
     sortOrder: false,
     sortValue: "default",
-    onlyPending: false
+    onlyPending: false,
+    activePage: 1,
+    itemsPerPage: 6
   },
   getters: {
+
+    itemsPerPage: state => {
+      return state.itemsPerPage;
+    },
+
     itemsLoaded: state => {
       return state.itemsLoaded;
     },
@@ -86,7 +93,18 @@ export default createStore({
 
     selectPending(state) {
       state.onlyPending = !state.onlyPending;
-    }
+    },
+
+    toggleItemState(state, id) {
+      let index = state.items.map(item => item.id).indexOf(id);
+      state.items[index].completed = !state.items[index].completed;      
+    },
+
+    deleteItem(state, id) {
+      let index = state.items.map(item => item.id).indexOf(id);
+      state.items.splice(index, 1);      
+    },
+
   },
   actions: {
   },

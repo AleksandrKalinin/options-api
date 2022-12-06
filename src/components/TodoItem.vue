@@ -1,5 +1,5 @@
 <template>
-  <div v-for="item in items" v-bind:key="item.id" class="todo-item" v-bind:class="{'todo-item__completed': item.completed}">
+  <div v-for="item in filteredAndSearchedAndSortedItems" v-bind:key="item.id" class="todo-item" v-bind:class="{'todo-item__completed': item.completed}">
     <h2 v-bind:class="{'todo-header__completed': item.completed}" class="todo-item__header">{{item.title}}</h2>
     <p v-bind:class="{'todo-text__completed': item.completed}" class="todo-item__text">{{item.text}}</p>
     <div class="todo-info">
@@ -14,12 +14,21 @@
 </template>
 
 <script>
+  import {mapGetters} from "vuex";
 export default {
   name: 'TodoItem',
   props: {
-    items: {
-      type: Array,
-      required: true
+
+  },
+  computed: {
+    ...mapGetters(["filteredAndSearchedAndSortedItems"])
+  },
+  methods: {
+    toggleItem: function(id) {
+      this.$store.commit('toggleItemState', id)
+    },
+    deleteItem: function(id) {
+      this.$store.commit('deleteItem', id)
     }
   },
   onMounted() {
