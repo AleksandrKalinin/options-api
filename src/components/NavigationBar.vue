@@ -1,7 +1,7 @@
 <template>
   <header class="navbar">
     <input type="text" name="" v-model="searchValue" class="todo-input" v-on:input="searchItems">
-    <button class="todo-button" v-on:click="open()">Add item</button>
+    <button class="todo-button" v-on:click="toggle()">Add item</button>
     <div class="sorting-order">
       <a class="sorting-order__link" id="default" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'default'}">by default</a>        
       <a class="sorting-order__link" id="title" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'title'}">by title</a>
@@ -16,7 +16,7 @@
 import {mapGetters} from "vuex";
 export default {
   name: 'NavigationBar',
-  props: ["open"],
+  props: ["toggle"],
   data(){
     return {
       searchValue: ""
@@ -53,6 +53,7 @@ export default {
     selectPending: function() {
       this.$store.commit('selectPending');
     }
+
   }
 }
 </script>

@@ -9,9 +9,10 @@ export default createStore({
     sortOrder: false,
     sortValue: "default",
     onlyPending: false,
-    activePage: 1,
+    currentPage: 1,
     itemsPerPage: 6
   },
+
   getters: {
 
     itemsPerPage: state => {
@@ -30,18 +31,15 @@ export default createStore({
       return state.onlyPending;
     },
 
+    currentPage: state => {
+      return state.currentPage;
+    },
+
     items: state => {
-      if (state.onlyPending) {
-        console.log("filtering");
-        console.log([...state.items].filter(item => item.completed !== true))
-        return [...state.items.filter(item => item.completed !== true)] 
-      } else {
         return state.items;
-      }
     },
 
     filteredItems(state, getters) {
-      console.log(state.items);
       if (state.selectedFilter !== 'All') {
         return [...getters.items.filter(item => item.category === state.selectedFilter)]
       } else {
@@ -53,19 +51,29 @@ export default createStore({
       return [...getters.filteredItems.filter(item => item.title.toLowerCase().includes(state.searchQuery.toLowerCase()))]
     },
 
+    pendingItems(state, getters) {
+      if (state.onlyPending) {
+        return [...getters.filteredAndSearchedItems.filter(item => item.completed !== true)] 
+      } else {
+        return getters.filteredAndSearchedItems;
+      }      
+    },    
+
     filteredAndSearchedAndSortedItems(state, getters) {
       let val = state.sortValue;
       if (val === "default") {
-        return [ ...getters.filteredAndSearchedItems ]
+        return [ ...getters.pendingItems ]
       }
       else if (state.sortOrder) {
-        return [...getters.filteredAndSearchedItems.sort((a,b) => a[val].localeCompare(b[val])) ] 
+        return [...getters.pendingItems.sort((a,b) => a[val].localeCompare(b[val])) ] 
       }
       else {
-        return [...getters.filteredAndSearchedItems.sort((a,b) => b[val].localeCompare(a[val])) ] 
+        return [...getters.pendingItems.sort((a,b) => b[val].localeCompare(a[val])) ] 
       }      
     }
+
   },
+
   mutations: {
     updateItems(state, items) {
       state.items = items;
@@ -104,6 +112,14 @@ export default createStore({
       let index = state.items.map(item => item.id).indexOf(id);
       state.items.splice(index, 1);      
     },
+
+    selectPage(state, value) {
+      state.currentPage = value;
+    },
+
+    addItem(state, value) {
+      state.items.push(value);
+    }
 
   },
   actions: {

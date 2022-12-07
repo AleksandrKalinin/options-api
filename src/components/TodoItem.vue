@@ -1,5 +1,5 @@
 <template>
-  <div v-for="item in filteredAndSearchedAndSortedItems" v-bind:key="item.id" class="todo-item" v-bind:class="{'todo-item__completed': item.completed}">
+  <div v-for="item in filteredAndSearchedAndSortedItems.slice(0)" v-bind:key="item.id" class="todo-item" v-bind:class="{'todo-item__completed': item.completed}">
     <h2 v-bind:class="{'todo-header__completed': item.completed}" class="todo-item__header">{{item.title}}</h2>
     <p v-bind:class="{'todo-text__completed': item.completed}" class="todo-item__text">{{item.text}}</p>
     <div class="todo-info">
@@ -31,10 +31,10 @@ export default {
       this.$store.commit('deleteItem', id)
     }
   },
-  onMounted() {
-    console.log("mounted");
+  updated() {
+    console.log(...this.filteredAndSearchedAndSortedItems.slice())
   }
-}
+} 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -44,4 +44,5 @@ export default {
     justify-content: space-between;
     align-items: center;
   }
+
 </style>

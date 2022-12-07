@@ -1,14 +1,21 @@
 <template>
   <section class="todo-section">
-    <template v-if="itemsLoaded" >
+    <template v-if="itemsLoaded && filteredAndSearchedAndSortedItems.length !== 0" >
       <TodoItem v-bind:items = "filteredAndSearchedAndSortedItems"/>
+    </template>
+    <template v-else-if="itemsLoaded && filteredAndSearchedAndSortedItems.length === 0">
+      Sorry, no items for display
     </template>
     <template v-else>
       Loading
-    </template>    
-    <TodoItem />
+    </template>         
     <div class="pagination">
-      <span class="pagination-item" v-for="item in pages" v-bind:key="item.val" v-bind:class="{'pagination-item_active': item.active}">{{item.val}}</span>
+      <template v-if="itemsLoaded" >
+        <span class="pagination-item" v-for="item in pages" v-on:click="selectPage(item.val)" v-bind:key="item.val" v-bind:class="{'pagination-item_active': item.val === currentPage}">{{item.val}}</span>
+      </template>
+      <template v-else>
+        Loading
+      </template>        
     </div>    
   </section>
 </template>
@@ -29,35 +36,42 @@ export default {
   computed: {
     ...mapGetters(["filteredAndSearchedAndSortedItems",
                    "itemsLoaded",
-                   "itemPerPage"])
+                   "itemsPerPage",
+                   "currentPage"])
   },
   methods: {
-    createPagination() {
+    selectPage: function(value){
+      this.$store.commit("selectPage", value)
+    },
+    renderPagination: function() {
       let arr = [];
       let number = this.filteredAndSearchedAndSortedItems.length / this.itemsPerPage;
       for (var i = 0; i < number; i++) {
         let obj = {
-          val: i + 1,
-          active: i === 0 ? true : false
+          "val": i + 1
         }
         arr.push(obj)
       } 
-      console.log(arr);
-      this.pages = arr;
+      this.pages = arr;      
     }
   }, 
-  mounted(){
-    let arr = [];
-    let number = this.filteredAndSearchedAndSortedItems.length / this.itemsPerPage;
-    for (var i = 0; i < number; i++) {
-      let obj = {
-        val: i + 1,
-        active: i === 0 ? true : false
+  watch: {
+   filteredAndSearchedAndSortedItems: {
+      deep: true,
+      handler: function() {
+        this.renderPagination()
       }
-      arr.push(obj)
-    } 
-    console.log(arr);
-    this.pages = arr;
+    }  
+  },
+  mounted(){
+   // console.log(this.filteredAndSearchedAndSortedItems)
+    console.log("mounting");
+    //this.renderPagination();
+  },
+  updated(){
+    //console.log(this.filteredAndSearchedAndSortedItems)
+    console.log("updating");
+    //this.renderPagination();
   } 
 }
 </script>
@@ -79,7 +93,7 @@ export default {
     justify-content: center;
     align-items: center;
     margin: 0 5px;
-    transition: .2s all;
+    transition: .1s all;
     cursor: pointer;
   }
 
@@ -87,4 +101,5 @@ export default {
     background: tomato;
     color: #ffffff;
   }
+
 </style>

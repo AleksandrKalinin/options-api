@@ -1,12 +1,6 @@
 <template>
     <template v-if="addModalOpen">
-      <div class="overlay">
-        <form class="todo-form">
-          <input type="text" name="" class="todo-input" v-model="todoTitle" placeholder="Enter title">
-          <input type="text" name="" class="todo-input" v-model="todoText" placeholder="Enter text">
-          <button class="todo-button" v-on:click="addItem">submit</button>
-        </form>
-      </div>      
+      <AddModal :toggle = "toggleAddModal"/>
     </template>
     <template v-if="editModalOpen">
       <div class="overlay">
@@ -17,7 +11,7 @@
         </form>
       </div>        
     </template>
-  <NavigationBar :open = "openAddModal"/>
+  <NavigationBar :toggle = "toggleAddModal"/>
   <div class="main-container">
     <SideBar />
     <TodoList />
@@ -28,6 +22,7 @@
 import TodoList from './components/TodoList.vue'
 import SideBar from './components/SideBar.vue'
 import NavigationBar from './components/NavigationBar.vue'
+import AddModal from './components/AddModal.vue'
 
 export default {
   name: 'App',
@@ -58,8 +53,8 @@ export default {
       this.editModalOpen = true;
     },
 
-    openAddModal: function() {
-      this.addModalOpen = true;
+    toggleAddModal: function() {
+      this.addModalOpen = !this.addModalOpen;
     },
 
     openEditModal: function(id) {
@@ -80,7 +75,8 @@ export default {
   components: {
     TodoList,
     NavigationBar,
-    SideBar
+    SideBar,
+    AddModal
   }
 }
 </script>
@@ -91,9 +87,7 @@ export default {
   width: 100%;
   padding: 20px;
   display: flex;
-
 }
-
 
 body {
   margin: 0;
@@ -104,18 +98,6 @@ body {
 * {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(51, 51, 51, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .navbar {
@@ -163,48 +145,48 @@ body {
   align-items: center;
 }
 
-.todo-button {
-  font-size: 12px;
-  border: 1px solid tomato;
-  color: tomato;
-  background: transparent;
-  padding: 8px 15px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: .2s;
-  margin: 0 5px;
-}
+  .todo-button {
+    font-size: 12px;
+    border: 1px solid tomato;
+    color: tomato;
+    background: transparent;
+    padding: 8px 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: .2s;
+    margin: 0 5px;
+  }
 
-.todo-button:hover{
-  color: white;
-  background: tomato;  
-}
+  .todo-button:hover{
+    color: white;
+    background: tomato;  
+  }
 
-.todo-form {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  padding: 20px;
-  background: white;
-}
+  .todo-form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 20px;
+    background: white;
+  }
 
-.todo-input {
-  border: 1px solid tomato;
-  padding: 5px 10px;
-  margin: 5px;
-  height: 34px;
-}
+  .todo-input {
+    border: 1px solid tomato;
+    padding: 5px 10px;
+    margin: 5px;
+    height: 34px;
+  }
 
-.todo-checkbox {
-  border: 1px solid tomato;
-  height: 30px;
-  width: 30px;
-  border-radius: none;
-}
+  .todo-checkbox {
+    border: 1px solid tomato;
+    height: 30px;
+    width: 30px;
+    border-radius: none;
+  }
 
-.todo-form .todo-button {
-  align-self: flex-end;
-}
+  .todo-form .todo-button {
+    align-self: flex-end;
+  }
 
 </style>
