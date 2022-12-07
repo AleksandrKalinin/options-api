@@ -19,6 +19,10 @@ export default createStore({
       return state.itemsPerPage;
     },
 
+    currentPage: state => {
+      return state.currentPage;
+    },
+
     itemsLoaded: state => {
       return state.itemsLoaded;
     },
@@ -29,10 +33,6 @@ export default createStore({
 
     onlyPending: state => {
       return state.onlyPending;
-    },
-
-    currentPage: state => {
-      return state.currentPage;
     },
 
     items: state => {

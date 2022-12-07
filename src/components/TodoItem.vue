@@ -1,5 +1,5 @@
 <template>
-  <div v-for="item in filteredAndSearchedAndSortedItems.slice(0)" v-bind:key="item.id" class="todo-item" v-bind:class="{'todo-item__completed': item.completed}">
+  <div v-for="item in filteredAndSearchedAndSortedItems.slice(start, end)" v-bind:key="item.id" class="todo-item" v-bind:class="{'todo-item__completed': item.completed}">
     <h2 v-bind:class="{'todo-header__completed': item.completed}" class="todo-item__header">{{item.title}}</h2>
     <p v-bind:class="{'todo-text__completed': item.completed}" class="todo-item__text">{{item.text}}</p>
     <div class="todo-info">
@@ -21,7 +21,13 @@ export default {
 
   },
   computed: {
-    ...mapGetters(["filteredAndSearchedAndSortedItems"])
+    ...mapGetters(["filteredAndSearchedAndSortedItems", "currentPage", "itemsPerPage"]),
+    start() {
+      return (this.currentPage - 1) * this.itemsPerPage
+    },
+    end() {
+      return (this.currentPage - 1) * this.itemsPerPage + this.itemsPerPage
+    }
   },
   methods: {
     toggleItem: function(id) {
@@ -32,7 +38,9 @@ export default {
     }
   },
   updated() {
-    console.log(...this.filteredAndSearchedAndSortedItems.slice())
+    //console.log("items");
+    //console.log((this.currentPage - 1) * this.itemsPerPage);
+    console.log(this.filteredAndSearchedAndSortedItems.slice(this.start, this.end))
   }
 } 
 </script>

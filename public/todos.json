@@ -52,7 +52,7 @@
     "date": "2019-01-21",
     "category": "General",
     "completed": false,
-    "title": "Lorem ipsum 1",
+    "title": "Lorem ipsum 7",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
   },
   {
@@ -60,7 +60,7 @@
     "date": "2019-04-23",
     "category": "Work",
     "completed": true,
-    "title": "Lorem ipsum 2",
+    "title": "Lorem ipsum 8",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." 
   },
   {
@@ -92,7 +92,7 @@
     "date": "2019-04-23",
     "completed": true,
     "category": "General",
-    "title": "Lorem ipsum 6",
+    "title": "Lorem ipsum 12",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
