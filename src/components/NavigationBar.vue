@@ -2,12 +2,22 @@
   <header class="navbar">
     <input type="text" name="" v-model="searchValue" class="todo-input" v-on:input="searchItems">
     <button class="todo-button" v-on:click="toggle()">Add item</button>
-    <div class="sorting-order">
-      <a class="sorting-order__link" id="default" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'default'}">by default</a>        
-      <a class="sorting-order__link" id="title" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'title'}">by title</a>
-      <a class="sorting-order__link" id="category" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'category'}">by category</a>
-      <a class="sorting-order__link" id="date" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'date'}">by date</a>
-      <p class="sort-order__pending"><input class="pending-checkbox" type="checkbox" name="" v-on:click="selectPending"> Show only pending </p>
+    <div class="navbar-navigation">
+      <div class="sorting-order">
+        <a class="sorting-order__link" id="default" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'default'}">by default</a>        
+        <a class="sorting-order__link" id="title" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'title'}">by title</a>
+        <a class="sorting-order__link" id="category" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'category'}">by category</a>
+        <a class="sorting-order__link" id="date" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'date'}">by date</a>
+        <p class="sort-order__pending"><input class="pending-checkbox" type="checkbox" name="" v-on:click="selectPending"> Show only pending </p>
+      </div>
+      <div class="navbar-pagination">
+        <span class="navbar-pagination__text">Показывать по: </span>
+        <select class="pagination-select" v-model="itemsPerPage" >
+          <option class="pagination-select__option">6</option>
+          <option class="pagination-select__option">12</option>
+          <option class="pagination-select__option">18</option>
+        </select>
+      </div>      
     </div>
   </header>
 </template>
@@ -23,7 +33,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["sortValue"])
+    ...mapGetters(["sortValue"]),
+    itemsPerPage: {
+      get() { return this.$store.state.pagination.itemsPerPage },
+      set(value) { this.$store.commit('pagination/selectPagesRender', value) }
+    }
   },
   methods: {
     sortItems: function(e){
@@ -53,13 +67,19 @@ export default {
     selectPending: function() {
       this.$store.commit('selectPending');
     }
-
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+  .navbar-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .sorting-order {
     padding: 15px 0;
     display: flex;
@@ -86,5 +106,9 @@ export default {
     border: 1px solid tomato;
     border-radius: 0;
     margin: 0 10px 0 0;
+  }
+
+  .navbar-pagination__text {
+    margin-right: 8px;
   }
 </style>

@@ -8,7 +8,10 @@
         <button class="todo-button" v-on:click="deleteItem(item.id)">Delete</button>
         <input type="checkbox" v-on:click="toggleItem(item.id)" v-bind:checked="item.completed" class="todo-checkbox">
       </div>
-      <p class="todo-category">Category: {{item.category}}</p>      
+    </div>
+    <div class="todo-footer">
+      <p v-bind:class="{'todo-text__completed': item.completed}" class="todo-date">{{item.date}}</p>
+      <p v-bind:class="{'todo-text__completed': item.completed}" class="todo-date">Category: {{item.category}}</p>
     </div>
   </div>
 </template>
@@ -22,6 +25,7 @@ export default {
   },
   computed: {
     ...mapGetters(["filteredAndSearchedAndSortedItems", "currentPage", "itemsPerPage"]),
+    ...mapGetters("pagination", ["currentPage", "itemsPerPage"]),
     start() {
       return (this.currentPage - 1) * this.itemsPerPage
     },
@@ -38,9 +42,7 @@ export default {
     }
   },
   updated() {
-    //console.log("items");
-    //console.log((this.currentPage - 1) * this.itemsPerPage);
-    console.log(this.filteredAndSearchedAndSortedItems.slice(this.start, this.end))
+
   }
 } 
 </script>

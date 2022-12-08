@@ -23,7 +23,7 @@ import TodoList from './components/TodoList.vue'
 import SideBar from './components/SideBar.vue'
 import NavigationBar from './components/NavigationBar.vue'
 import AddModal from './components/AddModal.vue'
-
+import {mapActions} from "vuex";
 export default {
   name: 'App',
   data(){
@@ -33,6 +33,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["fetchItems"]),
     addItem: function(e) {
       e.preventDefault();
       let newItem = {
@@ -65,12 +66,14 @@ export default {
     }
   },
   mounted() {
+    this.fetchItems();
+    /*
     fetch('./todos.json')
       .then(response => response.json())
       .then(data => {
         this.$store.commit('updateItems', data);
       })
-      .then(() => this.$store.commit('itemsFetched'))
+      .then(() => this.$store.commit('itemsFetched')) */
   },
   components: {
     TodoList,
@@ -105,7 +108,7 @@ body {
 }
 
 .todo-section {
-  width: calc(100% - 320px);
+  width: calc(100% - 270px);
   margin-left: 20px;
 }
 
@@ -116,8 +119,15 @@ body {
   transition: .1s all;
 }
 
-.todo-item__completed {
-  border: 1px solid #CCCCCC;
+.todo-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-date {
+  color: tomato;
+  font-size: 13px;
+  margin: 16px 0 0 0;
 }
 
 .todo-item__header {
@@ -135,6 +145,10 @@ body {
   transition: .1s all;
 }
 
+.todo-item__completed {
+  border: 1px solid #CCCCCC;
+}
+
 .todo-text__completed, .todo-header__completed {
   color: #CCCCCC;
   text-decoration: line-through;
@@ -145,48 +159,54 @@ body {
   align-items: center;
 }
 
-  .todo-button {
-    font-size: 12px;
-    border: 1px solid tomato;
-    color: tomato;
-    background: transparent;
-    padding: 8px 15px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: .2s;
-    margin: 0 5px;
-  }
+.todo-button {
+  font-size: 12px;
+  border: 1px solid tomato;
+  color: tomato;
+  background: transparent;
+  padding: 8px 15px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: .2s;
+  margin: 0 5px;
+}
 
-  .todo-button:hover{
-    color: white;
-    background: tomato;  
-  }
+.todo-button:hover{
+  color: white;
+  background: tomato;  
+}
 
-  .todo-form {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    padding: 20px;
-    background: white;
-  }
+.todo-form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 20px;
+  background: white;
+}
 
-  .todo-input {
-    border: 1px solid tomato;
-    padding: 5px 10px;
-    margin: 5px;
-    height: 34px;
-  }
+.todo-input, .todo-select {
+  border: 1px solid tomato;
+  outline: 1px solid tomato;
+  border-radius: 0;
+  padding: 5px 10px;
+  margin: 5px;
+  height: 34px;
+}
 
-  .todo-checkbox {
-    border: 1px solid tomato;
-    height: 30px;
-    width: 30px;
-    border-radius: none;
-  }
+.todo-select {
+  cursor: pointer;
+}
 
-  .todo-form .todo-button {
-    align-self: flex-end;
-  }
+.todo-checkbox {
+  border: 1px solid tomato;
+  height: 30px;
+  width: 30px;
+  border-radius: none;
+}
+
+.todo-form .todo-button {
+  align-self: flex-end;
+}
 
 </style>

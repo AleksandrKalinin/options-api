@@ -4,7 +4,9 @@
       <TodoItem v-bind:items = "filteredAndSearchedAndSortedItems"/>
     </template>
     <template v-else-if="itemsLoaded && filteredAndSearchedAndSortedItems.length === 0">
-      Sorry, no items for display
+      <div class="empty-placeholder">
+        Sorry, no items for display        
+      </div>
     </template>
     <template v-else>
       Loading
@@ -35,13 +37,13 @@ export default {
   },
   computed: {
     ...mapGetters(["filteredAndSearchedAndSortedItems",
-                   "itemsLoaded",
-                   "itemsPerPage",
-                   "currentPage"])
+                   "itemsLoaded"]),
+    ...mapGetters("pagination", ["itemsPerPage",
+                   "currentPage"]),    
   },
   methods: {
     selectPage: function(value){
-      this.$store.commit("selectPage", value)
+      this.$store.commit("pagination/selectPage", value)
     },
     renderPagination: function() {
       let arr = [];
@@ -61,23 +63,33 @@ export default {
       handler: function() {
         this.renderPagination()
       }
-    }  
+    },
+   itemsPerPage: {
+      deep: true,
+      handler: function() {
+        this.renderPagination()
+      }
+    }      
   },
   mounted(){
-   // console.log(this.filteredAndSearchedAndSortedItems)
-    console.log("mounting");
-    //this.renderPagination();
+
   },
   updated(){
-    //console.log(this.filteredAndSearchedAndSortedItems)
-    console.log("updating");
-    //this.renderPagination();
+
   } 
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .empty-placeholder {
+    width: 100;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: centerf;
+  }
+
   .pagination {
     display: flex;
     align-items: center;

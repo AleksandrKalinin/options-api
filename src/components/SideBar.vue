@@ -53,7 +53,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .sidebar {
-    width: 300px;
+    width: 250px;
     border: 1px solid tomato;
     padding: 20px 0;
   }

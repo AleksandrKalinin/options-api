@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { paginationModule } from '@/store/paginationModule';
 
 export default createStore({
   state: {
@@ -8,20 +9,10 @@ export default createStore({
     itemsLoaded: false,
     sortOrder: false,
     sortValue: "default",
-    onlyPending: false,
-    currentPage: 1,
-    itemsPerPage: 6
+    onlyPending: false
   },
 
   getters: {
-
-    itemsPerPage: state => {
-      return state.itemsPerPage;
-    },
-
-    currentPage: state => {
-      return state.currentPage;
-    },
 
     itemsLoaded: state => {
       return state.itemsLoaded;
@@ -113,17 +104,28 @@ export default createStore({
       state.items.splice(index, 1);      
     },
 
-    selectPage(state, value) {
-      state.currentPage = value;
-    },
-
     addItem(state, value) {
       state.items.push(value);
-    }
+    }  
 
   },
   actions: {
+    async fetchItems({commit}) {
+      try {
+        await fetch('./todos.json')
+          .then(response => response.json())
+          .then(data => {
+            commit('updateItems', data);
+          })
+          .then(() => commit('itemsFetched'))        
+      } catch (e) {
+          console.log(e)
+      } finally {
+          commit('itemsFetched');
+      }
+    }
   },
   modules: {
+    pagination: paginationModule
   }
 })
