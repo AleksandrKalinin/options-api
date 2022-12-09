@@ -7,7 +7,8 @@
         <form class="todo-form">
           <input type="text" name="" class="todo-input" v-model="todoTitle" placeholder="Enter title">
           <input type="text" name="" class="todo-input" v-model="todoText" placeholder="Enter text">
-          <button class="todo-button" v-on:click="editItem">submit</button>
+          <custom-button class="todo-button">submit</custom-button>
+          <custom-button  v-on:click="editItem">submit</custom-button>
         </form>
       </div>        
     </template>
@@ -67,13 +68,6 @@ export default {
   },
   mounted() {
     this.fetchItems();
-    /*
-    fetch('./todos.json')
-      .then(response => response.json())
-      .then(data => {
-        this.$store.commit('updateItems', data);
-      })
-      .then(() => this.$store.commit('itemsFetched')) */
   },
   components: {
     TodoList,
@@ -159,24 +153,6 @@ body {
   align-items: center;
 }
 
-.todo-button {
-  font-size: 12px;
-  border: 1px solid tomato;
-  color: tomato;
-  background: transparent;
-  padding: 8px 15px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: .2s;
-  margin: 0 5px;
-}
-
-.todo-button:hover{
-  color: white;
-  background: tomato;  
-}
-
 .todo-form {
   display: flex;
   flex-direction: column;
@@ -185,7 +161,7 @@ body {
   background: white;
 }
 
-.todo-input, .todo-select {
+.todo-select {
   border: 1px solid tomato;
   outline: 1px solid tomato;
   border-radius: 0;

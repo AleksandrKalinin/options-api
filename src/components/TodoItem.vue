@@ -4,8 +4,8 @@
     <p v-bind:class="{'todo-text__completed': item.completed}" class="todo-item__text">{{item.text}}</p>
     <div class="todo-info">
       <div class="todo-buttons">
-        <button class="todo-button" v-on:click="openEditModal(item.id)">Edit</button>
-        <button class="todo-button" v-on:click="deleteItem(item.id)">Delete</button>
+        <custom-button class="todo-button" v-on:click="openEditModal(item.id)">Edit</custom-button>
+        <custom-button class="todo-button" v-on:click="deleteItem(item.id)">Delete</custom-button>
         <input type="checkbox" v-on:click="toggleItem(item.id)" v-bind:checked="item.completed" class="todo-checkbox">
       </div>
     </div>

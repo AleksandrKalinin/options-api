@@ -1,7 +1,7 @@
 <template>
   <header class="navbar">
-    <input type="text" name="" v-model="searchValue" class="todo-input" v-on:input="searchItems">
-    <button class="todo-button" v-on:click="toggle()">Add item</button>
+    <custom-input type="text" name="" v-model="searchValue" v-on:input="searchItems" />
+    <custom-button v-on:click="toggle()">Add item</custom-button>
     <div class="navbar-navigation">
       <div class="sorting-order">
         <a class="sorting-order__link" id="default" v-on:click="sortItems" v-bind:class="{'sorting-link_active': sortValue === 'default'}">by default</a>        
@@ -27,6 +27,9 @@ import {mapGetters} from "vuex";
 export default {
   name: 'NavigationBar',
   props: ["toggle"],
+  components: {
+ 
+  },
   data(){
     return {
       searchValue: ""

@@ -1,15 +1,15 @@
 <template>
   <div class="overlay">
     <form class="todo-form">
-      <input type="text" name="" class="todo-input" v-model="todoTitle" placeholder="Enter title">
-      <input type="text" name="" class="todo-input" v-model="todoText" placeholder="Enter text">
+      <custom-input type="text" name="" v-model="todoTitle" placeholder="Enter title" />
+      <custom-input type="text" name="" v-model="todoText" placeholder="Enter text" />
       <select class="todo-select" v-model="todoCategory">
         <option class="todo-select__option" disabled value="">Select category:</option>
         <option class="todo-select__option">General</option>
         <option class="todo-select__option">Work</option>
         <option class="todo-select__option">Study</option>
       </select>
-      <button class="todo-button" v-on:click="addItem">submit</button>
+      <custom-button v-on:click="addItem">submit</custom-button>
     </form>
   </div> 
 </template>
@@ -29,6 +29,7 @@ export default {
         "category": this.todoCategory,
         "completed": false
       }
+      console.log(newItem);
       this.$store.commit("addItem", newItem);
       this.todoText = "";
       this.todoTitle ="";
